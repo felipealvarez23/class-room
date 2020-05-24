@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/class_rooms_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ealvarez
+    password: Delta231092#!
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
