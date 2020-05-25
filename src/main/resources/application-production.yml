@@ -8,4 +8,4 @@ spring:
     show-sql: true
 
 jobs:
-  next-class: "0 45 7-3 * * 1-5"
+  next-class: "0 45 7-15 * * 1-5"
