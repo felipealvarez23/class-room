@@ -3,6 +3,9 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://bfdeb215430778:45a5d923@us-cdbr-east-06.cleardb.net/heroku_fad623d43a3fdd8?reconnect=true
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: validate
     generate-ddl: true
     show-sql: true
+
+jobs:
+  next-class: "0 45 15-23 * * 1-5"

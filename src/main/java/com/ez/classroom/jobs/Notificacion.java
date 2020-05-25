@@ -19,7 +19,7 @@ public class Notificacion {
 		this.nextClassDelegate = nextClassDelegate;
 	}
 
-	@Scheduled(cron = "0 45 15-23 * * 7")
+	@Scheduled(cron = "${jobs.next-class}")
 	public void test(){
 		nextClassDelegate.checkNextClass();
 	}
