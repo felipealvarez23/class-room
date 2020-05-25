@@ -22,6 +22,7 @@ public class Notificacion {
 	@Scheduled(cron = "${jobs.next-class}")
 	public void test(){
 		nextClassDelegate.checkNextClass();
+		log.info("Next class job executed");
 	}
 
 }
