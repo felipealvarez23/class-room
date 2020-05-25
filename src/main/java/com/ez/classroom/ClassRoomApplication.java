@@ -14,8 +14,4 @@ public class ClassRoomApplication {
 		SpringApplication.run(ClassRoomApplication.class, args);
 	}
 
-	@PostConstruct
-	public void init(){
-		TimeZone.setDefault(TimeZone.getTimeZone("America/Bogota"));
-	}
 }
