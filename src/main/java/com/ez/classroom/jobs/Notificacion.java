@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
+@Component
 public class Notificacion {
 
 	private NextClassDelegate nextClassDelegate;
@@ -19,10 +19,10 @@ public class Notificacion {
 		this.nextClassDelegate = nextClassDelegate;
 	}
 
-	@Scheduled(cron = "${jobs.next-class}")
+	@Scheduled(cron = "${jobs.class-rooms.next-class}")
 	public void test(){
+		log.info("Start next class job");
 		nextClassDelegate.checkNextClass();
-		log.info("Next class job executed");
 	}
 
 }

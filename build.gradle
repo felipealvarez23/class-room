@@ -19,11 +19,21 @@ repositories {
 }
 
 dependencies {
+
+	//spring cloud
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.1.2.RELEASE'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: '2.1.2.RELEASE'
+	//mysql connector
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+	//spring jpa
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.0.RELEASE'
+	//twillio
 	implementation group: "com.twilio.sdk", name: "twilio", version: "7.50.1"
+	//vavr
 	compile 'io.vavr:vavr:0.10.0'
+	//spring web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

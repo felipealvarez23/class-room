@@ -1,4 +1,15 @@
+class-rooms:
+  url: "https://class-rooms.herokuapp.com/"
+
+jobs:
+  class-rooms:
+    next-class: "0 45 7-15 * * 1-5"
+  heroku:
+    refresh: "0 0/5 * * * *"
+
 spring:
+  application:
+    name: class-rooms
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://bfdeb215430778:45a5d923@us-cdbr-east-06.cleardb.net/heroku_fad623d43a3fdd8?reconnect=true
@@ -7,5 +18,3 @@ spring:
     generate-ddl: true
     show-sql: true
 
-jobs:
-  next-class: "0 45 7-15 * * 1-5"

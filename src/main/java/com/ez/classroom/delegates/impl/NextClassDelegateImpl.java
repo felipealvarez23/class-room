@@ -19,6 +19,7 @@ public class NextClassDelegateImpl implements NextClassDelegate {
 
 	private SchedulingService schedulingService;
 	private NotificacionService notificacionService;
+	private final String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm";
 
 	@Autowired
 	public NextClassDelegateImpl(SchedulingService schedulingService,
@@ -30,18 +31,19 @@ public class NextClassDelegateImpl implements NextClassDelegate {
 	@Override
 	public void checkNextClass() {
 		LocalDateTime currentDateTime = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT_DATE_TIME);
 		Either<Error, List<Scheduling>> schedulingList = schedulingService
 			.getSchedulingList(currentDateTime.getDayOfWeek());
-
 		if (schedulingList.isRight()) {
 			schedulingList.get()
 				.stream()
 				.filter(scheduling -> {
-						LocalDateTime programedHour = LocalDateTime
-							.parse(scheduling.getHour(), formatter);
-						return programedHour.getHour() == currentDateTime.plusHours(1).getHour();
+						int programedHour = LocalDateTime
+							.parse(
+								buildProgramedDate(currentDateTime, scheduling.getHour()),
+								formatter
+							).getHour();
+						return programedHour == currentDateTime.plusHours(1).getHour();
 					}
 				)
 				.findFirst()
@@ -54,12 +56,34 @@ public class NextClassDelegateImpl implements NextClassDelegate {
 		notificacionService.whatsAppNotification(buildMessage(classRoom));
 	}
 
+
+	/**
+	 * Builds message to user
+	 *
+	 * @param classRoom the class room
+	 * @return the  notification message
+	 */
 	private String buildMessage(ClassRoom classRoom) {
-		return String.format("Preparate para la siguiente clase de %s este es el link %s %s"
-			, classRoom.getDescription(),
+		return String.format("Preparate para la siguiente clase de %s este es el link %s %s",
+			classRoom.getDescription(),
 			classRoom.getUrl(),
-			(classRoom.getPassword()!=null) ? "\nPassword: " + classRoom.getPassword():""
-			);
+			(classRoom.getPassword() != null) ? "\nPassword: " + classRoom.getPassword() : ""
+		);
+	}
+
+	/**
+	 * Builds the local date time's scheduling
+	 * @param currentDateTime
+	 * @param hour
+	 * @return
+	 */
+	private String buildProgramedDate(LocalDateTime currentDateTime, String hour) {
+		return String.format("%s-%s-%s %s",
+			currentDateTime.getYear(),
+			"01",
+			currentDateTime.getDayOfMonth(),
+			hour
+		);
 	}
 
 }
