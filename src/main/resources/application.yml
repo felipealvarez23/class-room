@@ -1,9 +1,18 @@
+class-rooms:
+  url: "https://class-rooms.herokuapp.com/"
+
+jobs:
+  class-rooms:
+    next-class: "0 45 7-15 * * 1-5"
+  heroku:
+    refresh: "0 0/5 * * * *"
+
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/class_rooms_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: ealvarez
-    password: Delta231092#!
+    password: delta231092
   jpa:
     hibernate.ddl-auto: create
     generate-ddl: true
