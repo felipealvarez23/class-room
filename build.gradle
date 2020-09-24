@@ -23,6 +23,8 @@ dependencies {
 	//spring cloud
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.1.2.RELEASE'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: '2.1.2.RELEASE'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.1.2.RELEASE'
+
 	//mysql connector
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 	//spring jpa

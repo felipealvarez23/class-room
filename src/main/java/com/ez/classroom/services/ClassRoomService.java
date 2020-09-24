@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface ClassRoomService {
 
-	Either<Error,ClassRoom> saveClassRoom(ClassRoom classRoom);
+	ClassRoom saveClassRoom(ClassRoom classRoom);
 
 	ClassRoom getClassRoom(Long id);
 
-	Either<Error,List<ClassRoom>> getClassRooms();
+	List<ClassRoom> getClassRooms();
 
 	ClassRoom updateClassRoom(ClassRoom classRoom);
 
-	ClassRoom deleteClassRoom(Long id);
+	void deleteClassRoom(Long id);
 
 }

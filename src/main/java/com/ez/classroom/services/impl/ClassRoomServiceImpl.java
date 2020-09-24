@@ -2,56 +2,66 @@
 package com.ez.classroom.services.impl;
 
 
+import com.ez.classroom.exceptions.ClassRoomException;
 import com.ez.classroom.model.ClassRoom;
 import com.ez.classroom.repositories.ClassRoomRepository;
+import com.ez.classroom.repositories.SchedulingRepository;
 import com.ez.classroom.services.ClassRoomService;
-import io.vavr.control.Either;
-import io.vavr.control.Try;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
 public class ClassRoomServiceImpl implements ClassRoomService {
 
-	private ClassRoomRepository classRoomRepository;
+    private ClassRoomRepository classRoomRepository;
+    private SchedulingRepository schedulingRepository;
 
-	@Autowired
-	public ClassRoomServiceImpl(ClassRoomRepository classRoomRepository) {
-		this.classRoomRepository = classRoomRepository;
-	}
+    @Autowired
+    public ClassRoomServiceImpl(ClassRoomRepository classRoomRepository, SchedulingRepository schedulingRepository) {
+        this.classRoomRepository = classRoomRepository;
+        this.schedulingRepository = schedulingRepository;
+    }
 
-	@Override
-	public Either<Error,ClassRoom> saveClassRoom(ClassRoom classRoom) {
-		return Try.of(()-> classRoomRepository.save(classRoom))
-			.onFailure(throwable -> log.error("Error al intentar guardar la clase {}", classRoom.getDescription()))
-			.toEither(new Error());
-	}
+    @Override
+    public ClassRoom saveClassRoom(ClassRoom classRoom) {
+        return Optional.of(classRoomRepository.save(classRoom))
+                .orElseThrow(() -> new ClassRoomException(
+                        String.format("Error saving class room register")));
+    }
 
-	@Override
-	public ClassRoom getClassRoom(Long id) {
-		return null;
-	}
+    @Override
+    public ClassRoom getClassRoom(Long id) {
+        return classRoomRepository.findById(id)
+                .orElseThrow(() -> new ClassRoomException(
+                        String.format("Error querying class room [%s]", id)));
+    }
 
-	@Override
-	public Either<Error,List<ClassRoom>> getClassRooms() {
-		Either<Error,List<ClassRoom>> either = Try.of(()-> classRoomRepository.findAll())
-			.onFailure(throwable -> log.error("Error al consultar las clases",throwable))
-			.toEither(new Error());
-
-		return either;
-	}
+    @Override
+    public List<ClassRoom> getClassRooms() {
+        return classRoomRepository.findAll();
+    }
 
 
-	@Override
-	public ClassRoom updateClassRoom(ClassRoom classRoom) {
-		return null;
-	}
+    @Override
+    public ClassRoom updateClassRoom(ClassRoom classRoom) {
+        return null;
+    }
 
-	@Override
-	public ClassRoom deleteClassRoom(Long id) {
-		return null;
-	}
+    @Override
+    public void deleteClassRoom(Long id) {
+        try {
+			log.info("Starting to delete class room [{}]", id);
+            classRoomRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ClassRoomException(String
+                    .format("Error removing class room register with id [%s]", id));
+        }
+    }
+
+
 }

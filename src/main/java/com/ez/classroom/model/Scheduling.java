@@ -2,6 +2,7 @@
 package com.ez.classroom.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.DayOfWeek;
@@ -21,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "scheduling")
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Scheduling {
 
 	@Id
@@ -31,7 +31,7 @@ public class Scheduling {
 	private String hour;
 
 	@ManyToOne()
-	@JsonIgnore
+	@JsonIgnoreProperties("scheduling_list")
 	@JoinColumn(name = "class_room_id")
 	private ClassRoom classRoom;
 }

@@ -15,8 +15,13 @@ public class Heroku {
 	@Value("${class-rooms.url}")
 	private String url;
 
+	@Value("${jobs.heroku.enable-refresh}")
+	private boolean enableRefresh;
+
 	@Scheduled(cron = "${jobs.heroku.refresh}")
 	public void refresh(){
-		new RestTemplate().getForEntity(url.concat("refresh"), Object.class);
+		if (enableRefresh) {
+			new RestTemplate().getForEntity(url.concat("refresh"), Object.class);
+		}
 	}
 }

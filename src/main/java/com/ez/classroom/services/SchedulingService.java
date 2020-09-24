@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SchedulingService {
 
-	Either<Error, List<Scheduling>> getSchedulingList(DayOfWeek dayOfWeek);
+	List<Scheduling> getSchedulingList(DayOfWeek dayOfWeek);
 }

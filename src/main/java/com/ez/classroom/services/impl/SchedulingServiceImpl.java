@@ -2,17 +2,18 @@
 package com.ez.classroom.services.impl;
 
 
-import com.ez.classroom.model.ClassRoom;
+import com.ez.classroom.exceptions.SchedulingException;
 import com.ez.classroom.model.Scheduling;
 import com.ez.classroom.repositories.SchedulingRepository;
 import com.ez.classroom.services.SchedulingService;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
-import java.time.DayOfWeek;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -27,12 +28,14 @@ public class SchedulingServiceImpl implements SchedulingService {
 	}
 
 	@Override
-	public Either<Error, List<Scheduling>> getSchedulingList(DayOfWeek dayOfWeek) {
+	public List<Scheduling> getSchedulingList(DayOfWeek dayOfWeek) {
+		try{
+			log.info("Start query to current scheduling, [{}] day", dayOfWeek.getValue());
+			return schedulingRepository.getAllByDayOfWeek(dayOfWeek);
+		} catch (Exception e){
+			throw new SchedulingException(
+					String.format("Error querying the scheduling list to [%s] day", dayOfWeek.getValue()));
+		}
 
-		Either<Error,List<Scheduling>> either = Try.of(()->schedulingRepository.getAllByDayOfWeek(dayOfWeek))
-			.onFailure(throwable -> log.error("Error recuperando scheduling",throwable))
-			.toEither(new Error());
-
-		return either;
 	}
 }
