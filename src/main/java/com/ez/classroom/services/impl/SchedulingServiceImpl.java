@@ -6,8 +6,6 @@ import com.ez.classroom.exceptions.SchedulingException;
 import com.ez.classroom.model.Scheduling;
 import com.ez.classroom.repositories.SchedulingRepository;
 import com.ez.classroom.services.SchedulingService;
-import io.vavr.control.Either;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
