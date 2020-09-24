@@ -2,14 +2,18 @@ class-rooms:
   url: "https://class-rooms.herokuapp.com/"
 
 jobs:
-  class-rooms:
-    next-class: "0 45 7-15 * * 1-5"
   heroku:
+    enable-refresh: true
     refresh: "0 0/5 * * * *"
+
+server:
+  port: 8002
 
 spring:
   application:
     name: class-rooms
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://bfdeb215430778:45a5d923@us-cdbr-east-06.cleardb.net/heroku_fad623d43a3fdd8?reconnect=true
